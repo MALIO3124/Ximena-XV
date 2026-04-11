@@ -7,215 +7,288 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta de Colores Elegida */
-            --azul-profundo: #1a2a3a;
-            --azul-glaciar: #d4eaf7;
-            --plata: #e0e0e0;
-            --oro-suave: #d4af37;
-            --cristal: rgba(255, 255, 255, 0.9);
-            --blanco-puro: #ffffff;
-            --glow: rgba(212, 175, 55, 0.4); /* Brillo dorado */
+            --azul-noche: #0f172a;
+            --azul-rey: #1e293b;
+            --plata: #cbd5e1;
+            --oro: #94a3b8; /* Plata metálico */
+            --oro-brillante: #f1f5f9;
+            --cristal: rgba(255, 255, 255, 0.95);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            /* Fondo con degradado animado */
-            background: linear-gradient(-45deg, #ffffff, #e3f2fd, var(--azul-glaciar), #ffffff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: #0f172a;
             font-family: 'Montserrat', sans-serif;
-            color: var(--azul-profundo);
+            color: var(--azul-noche);
             text-align: center;
-            overflow: hidden; /* Oculta el scroll hasta que se abre */
+            overflow: hidden;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- PANTALLA DE ENTRADA --- */
+        /* --- ENTRADA DE GALA (MEJORADA) --- */
         #bienvenida {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #ffffff;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
             display: flex; justify-content: center; align-items: center;
-            z-index: 3000;
-            transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5000;
+            transition: transform 1.5s cubic-bezier(0.8, 0, 0.2, 1), opacity 1s;
         }
 
-        .sobre-entrada {
-            border: 1px solid var(--azul-glaciar);
-            padding: 70px 50px;
-            border-radius: 30px;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.05);
-            background: #ffffff;
-            text-align: center;
-        }
-
-        .boton-magico {
-            background: var(--azul-profundo);
-            color: #ffffff;
-            padding: 20px 60px;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Cinzel', serif;
-            cursor: pointer;
-            font-size: 1.1rem;
-            letter-spacing: 3px;
-            transition: 0.4s;
+        .envelope {
+            width: 90%;
+            max-width: 400px;
+            padding: 50px 20px;
+            background: white;
+            border: 8px double var(--plata);
             position: relative;
-            overflow: hidden; /* Para el brillo */
-            box-shadow: 0 10px 20px rgba(26, 42, 58, 0.3);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            animation: pulse 2s infinite ease-in-out;
         }
 
-        /* Efecto de brillo que pasa por el botón */
-        .boton-magico::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            animation: brilloBoton 3s infinite;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
-        @keyframes brilloBoton {
-            0% { left: -150%; }
-            30% { left: 150%; }
-            100% { left: 150%; }
-        }
-
-        .boton-magico:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(26, 42, 58, 0.4);
-        }
-
-        /* --- EFECTO DE CHISPAS (SPARKLES) MEJORADO --- */
-        #sparkle-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 5;
-        }
-        .sparkle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(1px);
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* --- CONTENIDO PRINCIPAL --- */
-        #contenido {
-            display: none;
-            padding: 40px 20px;
-            max-width: 650px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-        }
-
-        header { margin-bottom: 60px; padding-top: 20px; }
-
-        h1 { 
-            font-family: 'Cinzel', serif; 
-            font-size: 2.8rem; 
-            letter-spacing: 6px; 
-            color: var(--azul-profundo); 
-            text-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .subtitulo-gala {
+        .envelope h2 {
             font-family: 'Cinzel', serif;
-            letter-spacing: 4px;
-            font-size: 0.9rem;
-            color: var(--azul-profundo);
-            margin-bottom: 20px;
-            display: block;
-            font-weight: bold;
-        }
-
-        /* CARDS CON ESTILO CRISTAL */
-        .card {
-            background: var(--cristal);
-            margin-bottom: 35px;
-            padding: 45px;
-            border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.8);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
-            backdrop-filter: blur(15px);
-            opacity: 0;
-            transform: translateY(50px);
-            transition: 1.2s cubic-bezier(0.2, 1, 0.2, 1);
-        }
-
-        .card.visible { opacity: 1; transform: translateY(0); }
-
-        .icono-gala {
-            font-size: 2.5rem;
-            color: var(--azul-profundo);
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        /* CONTADOR PRO */
-        .contador-flex {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 25px;
-            font-family: 'Cinzel', serif;
-        }
-        .time-box span { font-size: 2.2rem; font-weight: bold; color: var(--azul-profundo); }
-        .time-box p { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
-
-        /* DETALLES DE DÓNDE */
-        .card-titulo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            color: var(--azul-profundo);
-            margin-bottom: 10px;
-        }
-
-        /* BOTONES DE ACCIÓN GALA */
-        .boton-gala {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 35px;
-            border: 2px solid var(--azul-profundo);
-            color: var(--azul-profundo);
-            text-decoration: none;
-            border-radius: 50px;
-            font-family: 'Cinzel', serif;
+            letter-spacing: 5px;
             font-size: 0.8rem;
-            letter-spacing: 2px;
-            font-weight: bold;
+            margin-bottom: 15px;
+            color: #64748b;
+        }
+
+        .envelope h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--azul-noche);
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--plata);
+            padding-bottom: 10px;
+        }
+
+        .boton-abrir {
+            background: var(--azul-noche);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 3px;
+            cursor: pointer;
             transition: 0.4s;
             position: relative;
             overflow: hidden;
         }
 
-        /* Brillo dorado suave en hover */
-        .boton-gala:hover {
-            background: var(--azul-profundo);
-            color: #ffffff;
-            box-shadow: 0 10px 20px rgba(26, 42, 58, 0.3);
+        .boton-abrir::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: sweep 2s infinite;
         }
 
-        .confirm-btn {
-            background: #25d366;
-            color: #ffffff;
-            padding: 22px;
-            border-radius: 50px;
-            display: block;
+        @keyframes sweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* --- CHISPAS METÁLICAS --- */
+        #sparkle-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 10;
+        }
+        .sparkle {
+            position: absolute;
+            border-radius: 2px; /* Forma de confeti */
+            animation: fall linear infinite;
+            filter: drop-shadow(0 0 5px white);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(720deg); }
+        }
+
+        /* --- CONTENIDO --- */
+        #contenido {
+            display: none;
+            height: 100vh;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #f8fafc, #d1d5db);
+            padding-bottom: 50px;
+        }
+
+        .card {
+            background: var(--cristal);
+            margin: 30px auto;
+            padding: 40px 20px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border-left: 5px solid var(--azul-noche);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: 1s all ease;
+        }
+
+        .card.visible { opacity: 1; transform: scale(1); }
+
+        .contador-box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .time-val { font-size: 1.8rem; font-weight: bold; font-family: 'Cinzel', serif; }
+        .time-lab { font-size: 0.6rem; color: #64748b; }
+
+        .btn-confirm {
+            background: #16a34a;
+            color: white;
             text-decoration: none;
+            padding: 20px;
+            display: block;
+            border-radius: 5px;
             font-weight: bold;
-            margin-top: 30px;
-            font-size: 1.1rem;
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
-            transition: 0.3s;
+            margin-top: 20px;
         }
 
-        .
+        #music-btn {
+            position: fixed; bottom: 20px; right: 20px;
+            background: white; border-radius: 50%; width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="player" loop src="musica.mp3"></audio>
+
+    <div id="bienvenida">
+        <div class="envelope">
+            <h2>ESTÁS INVITADO A</h2>
+            <h1>XIMENA YANINA</h1>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; margin-bottom: 25px;">Una noche mágica espera...</p>
+            <button class="boton-abrir" onclick="start()">ABRIR SOBRE</button>
+        </div>
+    </div>
+
+    <div id="sparkle-container"></div>
+
+    <div id="music-btn" onclick="control()" style="display:none">
+        <span id="m-icon">⏸️</span>
+    </div>
+
+    <div id="contenido">
+        <header style="padding: 60px 20px;">
+            <p style="letter-spacing: 5px; font-size: 0.8rem;">CELEBRACIÓN DE MIS</p>
+            <h1 style="font-family: 'Cinzel', serif; font-size: 2.5rem; margin: 10px 0;">QUINCE AÑOS</h1>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic;">Ximena Yanina Rodríguez</p>
+        </header>
+
+        <div class="card">
+            <p style="font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 3px;">EL MOMENTO SE ACERCA</p>
+            <div class="contador-box">
+                <div><p class="time-val" id="d">00</p><p class="time-lab">DÍAS</p></div>
+                <div><p class="time-val" id="h">00</p><p class="time-lab">HRS</p></div>
+                <div><p class="time-val" id="m">00</p><p class="time-lab">MIN</p></div>
+                <div><p class="time-val" id="s">00</p><p class="time-lab">SEG</p></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family: 'Cinzel', serif; color: #1e293b;">LA CEREMONIA</h3>
+            <p style="margin: 15px 0;">Domingo 17 de Mayo, 2026</p>
+            <p style="font-weight: bold; font-size: 1.2rem;">07:00 PM</p>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family: 'Cinzel', serif;">LUGAR DEL EVENTO</h3>
+            <p style="margin: 10px 0;">Salón de Eventos Chabelos</p>
+            <p style="font-size: 0.8rem; color: #64748b;">Río Bravo, Tamaulipas</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Salon+De+Eventos+Chabelos+Rio+Bravo" target="_blank" style="color: #1e293b; display: inline-block; margin-top: 20px; font-weight: bold; border-bottom: 1px solid;">VER MAPA</a>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family: 'Cinzel', serif;">ASISTENCIA</h3>
+            <a href="https://wa.me/528994593453?text=¡Hola! Confirmo mi asistencia." class="btn-confirm">CONFIRMAR POR WHATSAPP</a>
+        </div>
+
+        <footer style="padding: 40px; font-size: 0.6rem; opacity: 0.4;">
+            DESIGNED BY ELIAS MENDEZ DEV
+        </footer>
+    </div>
+
+    <script>
+        const audio = document.getElementById('player');
+        
+        function start() {
+            // Animación de salida del sobre
+            document.getElementById('bienvenida').style.transform = 'translateY(-100%)';
+            document.getElementById('bienvenida').style.opacity = '0';
+            
+            audio.play().catch(e => console.log("Audio block"));
+
+            setTimeout(() => {
+                document.getElementById('bienvenida').style.display = 'none';
+                document.getElementById('contenido').style.display = 'block';
+                document.getElementById('music-btn').style.display = 'flex';
+                document.body.style.overflow = 'auto';
+                
+                // Mostrar tarjetas
+                const cards = document.querySelectorAll('.card');
+                cards.forEach((c, i) => {
+                    setTimeout(() => c.classList.add('visible'), i * 300);
+                });
+            }, 1000);
+
+            timer();
+            confetti();
+        }
+
+        function control() {
+            const icon = document.getElementById('m-icon');
+            if(audio.paused) { audio.play(); icon.innerText="⏸️"; }
+            else { audio.pause(); icon.innerText="🎵"; }
+        }
+
+        function timer() {
+            const end = new Date("May 17, 2026 19:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const d = end - now;
+                document.getElementById('d').innerText = Math.floor(d / (1000 * 60 * 60 * 24));
+                document.getElementById('h').innerText = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('m').innerText = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('s').innerText = Math.floor((d % (1000 * 60)) / 1000);
+            }, 1000);
+        }
+
+        function confetti() {
+            const container = document.getElementById('sparkle-container');
+            const colors = ['#f8fafc', '#94a3b8', '#1e293b', '#cbd5e1'];
+            setInterval(() => {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                const size = Math.random() * 8 + 4;
+                s.style.width = size + 'px';
+                s.style.height = (size * 0.4) + 'px';
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.top = '-20px';
+                s.style.background = colors[Math.floor(Math.random()*colors.length)];
+                s.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(s);
+                setTimeout(() => s.remove(), 4000);
+            }, 80);
+        }
+    </script>
+</body>
+</html>
