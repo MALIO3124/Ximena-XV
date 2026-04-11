@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XV - Ximena Yanina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-glaciar: #b9d9eb;
+            --azul-profundo: #2c5d7d;
+            --plata-brillante: #e0e0e0;
+            --blanco-cristal: rgba(255, 255, 255, 0.85);
+            --oro-suave: #d4af37; /* Para detalles mínimos de elegancia */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f7 0%, var(--azul-glaciar) 100%);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--azul-profundo);
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* Efecto de Brillo de Fondo */
+        .sparkle-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container { position: relative; z-index: 1; padding: 20px; }
+
+        header { padding: 60px 20px; }
+
+        h1 { 
+            font-family: 'Cinzel', serif; 
+            font-size: 2.5rem; 
+            letter-spacing: 5px;
+            color: var(--azul-profundo);
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .card {
+            background: var(--blanco-cristal);
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid white;
+            backdrop-filter: blur(10px);
+        }
+
+        .serif-gold {
+            font-family: 'Cinzel', serif;
+            color: var(--azul-profundo);
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Botón con el efecto de brillo que te gustó */
+        .boton-mapa {
+            background: transparent;
+            color: var(--azul-profundo);
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 20px;
+            border: 1px solid var(--azul-profundo);
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .boton-mapa::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: brillo 4s infinite;
+        }
+
+        @keyframes brillo {
+            0% { left: -150%; }
+            30% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .boton-mapa:hover {
+            background: var(--azul-profundo);
+            color: white;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            padding: 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: block;
+            margin: 30px auto;
+            max-width: 300px;
+            font-weight: bold;
+        }
+
+        .fecha-grande {
+            font-size: 2.2rem;
+            font-family: 'Cinzel', serif;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sparkle-bg"></div>
+
+    <div class="container">
+        <header>
+            <p class="subtitulo">Mis XV Años</p>
+            <h1>XIMENA YANINA</h1>
+            <p class="subtitulo">Rodríguez De La Cruz</p>
+        </header>
+
+        <section>
+            <div class="card">
+                <p class="serif-gold">CUÁNDO Y DÓNDE</p>
+                <div class="fecha-grande">DOMINGO 17 DE MAYO</div>
+                <p style="font-size: 1.1rem; color: var(--azul-profundo);">07:00 PM</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="card">
+                <p class="serif-gold">RECEPCIÓN DE GALA</p>
+                <h3 style="font-family: 'Cinzel'; margin-bottom: 10px;">SALÓN DE EVENTOS CHABELOS</h3>
+                <p style="font-size: 0.9rem;">Río Bravo, Tamaulipas</p>
+                
+                <a href="https://www.google.com/maps/search/?api=1&query=Salon+De+Eventos+Chabelos+Rio+Bravo" target="_blank" class="boton-mapa">
+                    VER UBICACIÓN EN MAPA
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <div class="card">
+                <p class="serif-gold">CONFIRMACIÓN</p>
+                <p>Tu presencia es nuestro mejor regalo.</p>
+                <a href="https://wa.me/528994593453?text=Hola%20Ximena,%20confirmo%20mi%20asistencia%20a%20tus%20XV" class="whatsapp-btn">
+                    CONFIRMAR POR WHATSAPP
+                </a>
+            </div>
+        </section>
+
+        <footer style="margin-top: 50px; font-size: 0.7rem; opacity: 0.6; padding-bottom: 30px;">
+            DESIGNED BY ELIAS NINTENDO DEV
+        </footer>
+    </div>
+</body>
+</html>
