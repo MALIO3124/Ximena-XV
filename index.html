@@ -7,23 +7,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Paleta de Colores Elegida */
+            --azul-profundo: #1a2a3a;
             --azul-glaciar: #d4eaf7;
-            --azul-magico: #3b7ba8;
-            --azul-noche: #1a2a3a;
-            --cristal: rgba(255, 255, 255, 0.92);
-            --glow: rgba(59, 123, 168, 0.2);
+            --plata: #e0e0e0;
+            --oro-suave: #d4af37;
+            --cristal: rgba(255, 255, 255, 0.9);
+            --blanco-puro: #ffffff;
+            --glow: rgba(212, 175, 55, 0.4); /* Brillo dorado */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background: linear-gradient(-45deg, #f0f4f8, #d4eaf7, #ffffff, #e3f2fd);
+            /* Fondo con degradado animado */
+            background: linear-gradient(-45deg, #ffffff, #e3f2fd, var(--azul-glaciar), #ffffff);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             font-family: 'Montserrat', sans-serif;
-            color: var(--azul-noche);
+            color: var(--azul-profundo);
             text-align: center;
-            overflow: hidden;
+            overflow: hidden; /* Oculta el scroll hasta que se abre */
         }
 
         @keyframes gradientBG {
@@ -32,11 +36,11 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* PANTALLA DE ENTRADA CON ESTILO */
+        /* --- PANTALLA DE ENTRADA --- */
         #bienvenida {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
+            background: #ffffff;
             display: flex; justify-content: center; align-items: center;
             z-index: 3000;
             transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -44,32 +48,52 @@
 
         .sobre-entrada {
             border: 1px solid var(--azul-glaciar);
-            padding: 60px 40px;
+            padding: 70px 50px;
             border-radius: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
-            background: white;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.05);
+            background: #ffffff;
+            text-align: center;
         }
 
         .boton-magico {
-            background: var(--azul-noche);
-            color: white;
-            padding: 18px 50px;
+            background: var(--azul-profundo);
+            color: #ffffff;
+            padding: 20px 60px;
             border: none;
             border-radius: 50px;
             font-family: 'Cinzel', serif;
             cursor: pointer;
-            font-size: 1rem;
-            letter-spacing: 2px;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
             transition: 0.4s;
-            box-shadow: 0 10px 20px var(--glow);
+            position: relative;
+            overflow: hidden; /* Para el brillo */
+            box-shadow: 0 10px 20px rgba(26, 42, 58, 0.3);
+        }
+
+        /* Efecto de brillo que pasa por el botón */
+        .boton-magico::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: brilloBoton 3s infinite;
+        }
+
+        @keyframes brilloBoton {
+            0% { left: -150%; }
+            30% { left: 150%; }
+            100% { left: 150%; }
         }
 
         .boton-magico:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px var(--glow);
+            box-shadow: 0 15px 30px rgba(26, 42, 58, 0.4);
         }
 
-        /* SPARKLES MEJORADOS */
+        /* --- EFECTO DE CHISPAS (SPARKLES) MEJORADO --- */
         #sparkle-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -77,7 +101,6 @@
         }
         .sparkle {
             position: absolute;
-            background: white;
             border-radius: 50%;
             filter: blur(1px);
             animation: fall linear infinite;
@@ -85,207 +108,114 @@
 
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        /* CONTENIDO */
+        /* --- CONTENIDO PRINCIPAL --- */
         #contenido {
             display: none;
             padding: 40px 20px;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
 
+        header { margin-bottom: 60px; padding-top: 20px; }
+
+        h1 { 
+            font-family: 'Cinzel', serif; 
+            font-size: 2.8rem; 
+            letter-spacing: 6px; 
+            color: var(--azul-profundo); 
+            text-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .subtitulo-gala {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            color: var(--azul-profundo);
+            margin-bottom: 20px;
+            display: block;
+            font-weight: bold;
+        }
+
+        /* CARDS CON ESTILO CRISTAL */
         .card {
             background: var(--cristal);
-            margin-bottom: 30px;
-            padding: 40px;
+            margin-bottom: 35px;
+            padding: 45px;
             border-radius: 25px;
-            border: 1px solid white;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
             backdrop-filter: blur(15px);
             opacity: 0;
-            transform: translateY(40px);
-            transition: 1s all ease;
+            transform: translateY(50px);
+            transition: 1.2s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
         .card.visible { opacity: 1; transform: translateY(0); }
 
-        h1 { font-family: 'Cinzel', serif; font-size: 2.5rem; letter-spacing: 5px; color: var(--azul-noche); }
-        .serif-gold { font-family: 'Cinzel', serif; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 15px; display: block; }
+        .icono-gala {
+            font-size: 2.5rem;
+            color: var(--azul-profundo);
+            margin-bottom: 15px;
+            display: block;
+        }
 
         /* CONTADOR PRO */
         .contador-flex {
             display: flex;
             justify-content: space-around;
-            margin-top: 20px;
-        }
-        .time-box span { font-size: 1.8rem; font-weight: bold; color: var(--azul-magico); }
-        .time-box p { font-size: 0.6rem; letter-spacing: 1px; }
-
-        /* BOTONES DE ACCIÓN */
-        .boton-mapa {
-            display: inline-block;
             margin-top: 25px;
-            padding: 14px 30px;
-            border: 1.5px solid var(--azul-magico);
-            color: var(--azul-magico);
+            font-family: 'Cinzel', serif;
+        }
+        .time-box span { font-size: 2.2rem; font-weight: bold; color: var(--azul-profundo); }
+        .time-box p { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
+
+        /* DETALLES DE DÓNDE */
+        .card-titulo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--azul-profundo);
+            margin-bottom: 10px;
+        }
+
+        /* BOTONES DE ACCIÓN GALA */
+        .boton-gala {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 35px;
+            border: 2px solid var(--azul-profundo);
+            color: var(--azul-profundo);
             text-decoration: none;
             border-radius: 50px;
             font-family: 'Cinzel', serif;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            font-weight: bold;
             transition: 0.4s;
+            position: relative;
+            overflow: hidden;
         }
-        .boton-mapa:hover { background: var(--azul-magico); color: white; }
+
+        /* Brillo dorado suave en hover */
+        .boton-gala:hover {
+            background: var(--azul-profundo);
+            color: #ffffff;
+            box-shadow: 0 10px 20px rgba(26, 42, 58, 0.3);
+        }
 
         .confirm-btn {
             background: #25d366;
-            color: white;
-            padding: 20px;
+            color: #ffffff;
+            padding: 22px;
             border-radius: 50px;
             display: block;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 25px;
+            margin-top: 30px;
+            font-size: 1.1rem;
             box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+            transition: 0.3s;
         }
 
-        #music-toggle {
-            position: fixed; bottom: 25px; right: 25px;
-            z-index: 100; background: white; width: 55px; height: 55px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-    <audio id="audioElement" loop preload="auto">
-        <source src="musica.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="bienvenida">
-        <div class="sobre-entrada">
-            <p style="font-style: italic; margin-bottom: 10px;">Estás invitado a los XV de</p>
-            <h1 style="margin-bottom: 40px;">XIMENA YANINA</h1>
-            <button class="boton-magico" onclick="initExperience()">ENTRAR</button>
-        </div>
-    </div>
-
-    <div id="sparkle-container"></div>
-
-    <div id="music-toggle" onclick="toggleAudio()" style="display:none">
-        <span id="music-icon">⏸️</span>
-    </div>
-
-    <div id="contenido">
-        <header style="margin-bottom: 50px;">
-            <p class="serif-gold">MIS XV AÑOS</p>
-            <h1>XIMENA YANINA</h1>
-            <p style="font-family: 'Playfair Display'; font-style: italic;">Rodríguez De La Cruz</p>
-        </header>
-
-        <div class="card">
-            <p class="serif-gold">FALTAN SOLO...</p>
-            <div class="contador-flex">
-                <div class="time-box"><span id="days">00</span><p>Días</p></div>
-                <div class="time-box"><span id="hours">00</span><p>Horas</p></div>
-                <div class="time-box"><span id="mins">00</span><p>Min</p></div>
-                <div class="time-box"><span id="secs">00</span><p>Seg</p></div>
-            </div>
-        </div>
-
-        <div class="card">
-            <p class="serif-gold">CUÁNDO</p>
-            <p style="font-size: 1.8rem; font-family: 'Cinzel';">17 de Mayo, 2026</p>
-            <p style="font-weight: bold; color: var(--azul-magico); margin-top: 10px;">A LAS 07:00 PM</p>
-        </div>
-
-        <div class="card">
-            <p class="serif-gold">DÓNDE</p>
-            <h3 style="font-family: 'Cinzel'; font-size: 1.2rem;">SALÓN DE EVENTOS CHABELOS</h3>
-            <p style="font-size: 0.9rem; margin-top: 5px;">Río Bravo, Tamaulipas</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=Salon+De+Eventos+Chabelos+Rio+Bravo" target="_blank" class="boton-mapa">ABRIR MAPA</a>
-        </div>
-
-        <div class="card">
-            <p class="serif-gold">CONFIRMACIÓN</p>
-            <p>Por favor confirma tu asistencia.</p>
-            <a href="https://wa.me/528994593453?text=¡Hola! Confirmo mi asistencia a los XV de Ximena." class="confirm-btn">ENVIAR WHATSAPP</a>
-        </div>
-
-        <footer style="padding: 40px 0; font-size: 0.7rem; opacity: 0.5;">
-            DESIGNED BY ELIAS MENDEZ DEV
-        </footer>
-    </div>
-
-    <script>
-        const audio = document.getElementById('audioElement');
-        const cards = document.querySelectorAll('.card');
-
-        function initExperience() {
-            // Intento forzado de audio
-            audio.play().then(() => {
-                console.log("Audio sonando correctamente");
-            }).catch(e => {
-                console.log("Error de audio: ", e);
-            });
-            
-            // Transiciones
-            document.getElementById('bienvenida').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('bienvenida').style.display = 'none';
-                document.getElementById('contenido').style.display = 'block';
-                document.getElementById('music-toggle').style.display = 'flex';
-                document.body.style.overflow = 'auto';
-                
-                // Mostrar tarjetas con delay
-                cards.forEach((card, index) => {
-                    setTimeout(() => card.classList.add('visible'), 200 * (index + 1));
-                });
-            }, 1000);
-
-            startTimer();
-            makeSparkles();
-        }
-
-        function toggleAudio() {
-            const icon = document.getElementById('music-icon');
-            if (audio.paused) {
-                audio.play();
-                icon.innerText = "⏸️";
-            } else {
-                audio.pause();
-                icon.innerText = "🎵";
-            }
-        }
-
-        function startTimer() {
-            const eventDate = new Date("May 17, 2026 19:00:00").getTime();
-            setInterval(() => {
-                const now = new Date().getTime();
-                const diff = eventDate - now;
-                if (diff < 0) return;
-                document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-                document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-                document.getElementById('mins').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-                document.getElementById('secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
-            }, 1000);
-        }
-
-        function makeSparkles() {
-            const container = document.getElementById('sparkle-container');
-            setInterval(() => {
-                const s = document.createElement('div');
-                s.className = 'sparkle';
-                const size = Math.random() * 4 + 1;
-                s.style.width = `${size}px`;
-                s.style.height = `${size}px`;
-                s.style.left = Math.random() * 100 + 'vw';
-                s.style.top = '-10px';
-                s.style.animationDuration = Math.random() * 2 + 3 + 's';
-                s.style.background = `rgba(255, 255, 255, ${Math.random()})`;
-                container.appendChild(s);
-                setTimeout(() => s.remove(), 5000);
-            }, 200);
-        }
-    </script>
-</body>
-</html>
+        .
