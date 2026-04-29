@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XV - Ximena Yanina</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Pinyon+Script&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Pinyon+Script&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --azul-glaciar: #b9d9eb;
+            --azul-calendario: #3a7ca5;
+            --fondo-postit: #d6eaf8;
             --azul-profundo: #2c5d7d;
-            --oro-metalico: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            --blanco-perla: rgba(255, 255, 255, 0.95);
+            --oro-texto: #b38728; /* Color original de los títulos */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,90 +31,75 @@
         }
 
         .sobre {
-            width: 90%; max-width: 500px; padding: 60px 20px;
-            border: 2px solid var(--azul-glaciar); border-radius: 15px;
-            background: white; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            width: 90%; max-width: 450px; padding: 50px 20px;
+            border: 2px solid #e0e0e0; border-radius: 15px;
+            background: white; box-shadow: 0 15px 40px rgba(0,0,0,0.05);
         }
 
         .cursiva-gala {
             font-family: 'Pinyon Script', cursive;
-            color: var(--azul-profundo);
-            line-height: 0.9;
             text-transform: none;
+            line-height: 1;
         }
 
         .boton-abrir {
             background: var(--azul-profundo); color: white;
-            padding: 18px 50px; border: none; border-radius: 50px;
-            font-family: 'Cinzel', serif; letter-spacing: 3px;
-            cursor: pointer; margin-top: 40px;
+            padding: 15px 40px; border: none; border-radius: 50px;
+            font-family: 'Cinzel', serif; letter-spacing: 2px;
+            cursor: pointer; margin-top: 30px; font-size: 0.8rem;
         }
 
         /* --- CONTENIDO PRINCIPAL --- */
         #contenido {
             display: none; height: 100vh; overflow-y: auto;
-            background: linear-gradient(to bottom, #ffffff, #e3f2fd);
+            background: #fff; max-width: 500px; margin: 0 auto;
         }
 
         .card {
-            background: var(--blanco-perla); margin: 30px auto;
-            padding: 40px 20px; width: 95%; max-width: 500px;
-            border-radius: 20px; backdrop-filter: blur(10px);
-            border: 1px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            opacity: 0; transform: translateY(30px); transition: 1s all ease;
+            padding: 30px 20px; width: 100%;
+            opacity: 0; transform: translateY(20px); transition: 1s all ease;
         }
 
         .card.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- CALENDARIO --- */
+        /* --- CALENDARIO ESTILO IMAGEN --- */
+        .post-it-calendario {
+            background-color: var(--fondo-postit);
+            width: 85%; margin: 20px auto; padding: 25px 15px;
+            box-shadow: 2px 5px 15px rgba(0,0,0,0.1);
+            color: var(--azul-calendario);
+            font-family: 'Playfair Display', serif;
+        }
+
         .calendar-grid {
             display: grid; grid-template-columns: repeat(7, 1fr);
-            gap: 5px; margin: 20px 0; padding: 15px 0;
-            border-top: 1px solid var(--azul-glaciar); border-bottom: 1px solid var(--azul-glaciar);
-        }
-        .day-header { font-weight: bold; font-size: 0.7rem; }
-        .day { padding: 8px 0; font-size: 1rem; position: relative; z-index: 1; }
-        .day.highlight::after {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); width: 35px; height: 35px;
-            background: var(--azul-glaciar); border-radius: 50%;
-            z-index: -1; opacity: 0.7;
+            gap: 5px; font-size: 0.8rem; margin-top: 10px;
         }
 
-        /* --- RELOJ --- */
-        .reloj { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 20px; }
-        .reloj-item p:first-child { font-family: 'Cinzel'; font-size: 1.8rem; font-weight: bold; }
-        .reloj-item p:last-child { font-size: 0.6rem; letter-spacing: 1px; }
-
-        /* --- VESTIMENTA (GANCHO) --- */
-        .gancho-svg { width: 100px; margin: 10px auto; display: block; }
-        .vestimenta-box { border: 2px dashed var(--azul-glaciar); padding: 25px 10px; margin-top: 20px; }
-        .reserva-azul {
-            background: #f1f5f9; padding: 15px; margin-top: 15px;
-            font-size: 0.75rem; font-weight: bold; color: #d946ef; border: 1px solid #ddd;
+        .day.marcado-corazon {
+            color: white; position: relative; z-index: 1;
         }
 
-        /* --- CONFIRMACIÓN --- */
-        .confirm-card {
-            background: var(--azul-profundo);
-            color: white;
-        }
-        .btn-confirm {
-            background: #25d366; color: white; text-decoration: none;
-            padding: 20px 40px; border-radius: 50px; font-weight: bold;
-            display: inline-block; margin-top: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        .day.marcado-corazon::before {
+            content: '❤'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 1.8rem;
+            color: var(--azul-calendario); z-index: -1; opacity: 0.8;
         }
 
-        #music-toggle {
-            position: fixed; bottom: 20px; right: 20px;
-            background: white; border-radius: 50%; width: 60px; height: 60px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 100;
-        }
+        /* --- VESTIMENTA --- */
+        .vestimenta-box { border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 20px 0; margin: 15px 0; }
+        .titulo-oro { color: var(--oro-texto); font-family: 'Cinzel'; letter-spacing: 2px; font-weight: 700; }
 
         #sparkle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
         .sparkle { position: absolute; border-radius: 50%; animation: fall linear infinite; }
         @keyframes fall { 0% { transform: translateY(-10vh); opacity: 1; } 100% { transform: translateY(110vh); opacity: 0; } }
+
+        #music-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            background: white; border-radius: 50%; width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 100;
+        }
     </style>
 </head>
 <body>
@@ -123,80 +108,88 @@
 
     <div id="bienvenida">
         <div class="sobre">
-            <p style="font-family: 'Cinzel'; letter-spacing: 3px; font-size: 0.65rem; margin-bottom: 5px;">MIS QUINCE AÑOS</p>
-            <h1 class="cursiva-gala" style="font-size: 5.5rem; margin-bottom: 20px;">Ximena Yanina</h1>
-            <p style="font-family: 'Cinzel'; letter-spacing: 5px; font-weight: bold; font-size: 0.9rem;">17 . MAYO . 2026</p>
+            <p style="font-family: 'Cinzel'; letter-spacing: 3px; font-size: 0.6rem; color: #888;">MIS XV AÑOS</p>
+            <h1 class="cursiva-gala" style="font-size: 3.5rem; color: var(--oro-texto); margin: 15px 0;">Ximena Yanina</h1>
+            <p style="font-family: 'Cinzel'; letter-spacing: 4px; font-size: 0.7rem;">17 . MAYO . 2026</p>
             <button class="boton-abrir" onclick="abrir()">ABRIR INVITACIÓN</button>
         </div>
     </div>
 
     <div id="sparkle-container"></div>
-    <div id="music-toggle" onclick="controlMusic()" style="display:none"><span id="m-icon">⏸️</span></div>
+    <div id="music-toggle" onclick="controlMusic()" style="display:none"><span>⏸️</span></div>
 
     <div id="contenido">
-        <header style="padding: 60px 20px;">
-            <p style="letter-spacing: 5px; font-size: 0.6rem; margin-bottom: 5px;">ESTÁS INVITADO A LOS XV AÑOS DE</p>
-            <h1 class="cursiva-gala" style="font-size: 7.5rem;">Ximena Yanina</h1>
+        <header style="padding: 50px 20px 20px;">
+            <p style="letter-spacing: 4px; font-size: 0.55rem; color: #888; margin-bottom: 5px;">ESTÁS INVITADO A LOS XV AÑOS DE</p>
+            <h1 class="cursiva-gala" style="font-size: 4.8rem; color: var(--oro-texto);">Ximena Yanina</h1>
+            <p style="font-family: 'Cinzel'; font-size: 0.6rem; letter-spacing: 2px; margin-top: 5px;">RODRÍGUEZ DE LA CRUZ</p>
         </header>
 
         <div class="card">
-            <p style="font-family: 'Playfair Display'; font-style: italic; line-height: 1.8;">
+            <p style="font-family: 'Playfair Display'; font-style: italic; font-size: 0.9rem; line-height: 1.6; color: #555; padding: 0 15px;">
                 "Existen momentos en la vida que imaginamos, soñamos y esperamos; uno de esos momentos ha llegado..."
             </p>
         </div>
 
-        <div class="card">
-            <h2 class="cursiva-gala" style="font-size: 4rem;">Mayo 2026</h2>
+        <div class="post-it-calendario">
+            <h3 style="font-size: 1.1rem; letter-spacing: 2px; font-weight: 700;">RESERVA ESTE DIA</h3>
             <div class="calendar-grid">
-                <div class="day-header">DO</div><div class="day-header">LU</div><div class="day-header">MA</div><div class="day-header">MI</div><div class="day-header">JU</div><div class="day-header">VI</div><div class="day-header">SA</div>
-                <div class="day"></div><div class="day"></div><div class="day"></div><div class="day"></div><div class="day"></div><div class="day">1</div><div class="day">2</div>
-                <div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div><div class="day">9</div>
-                <div class="day">10</div><div class="day">11</div><div class="day">12</div><div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div>
-                <div class="day highlight">17</div><div class="day">18</div><div class="day">19</div><div class="day">20</div><div class="day">21</div><div class="day">22</div><div class="day">23</div>
-                <div class="day">24</div><div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div><div class="day">29</div><div class="day">30</div><div class="day">31</div>
+                <div style="font-weight:bold">DO</div><div style="font-weight:bold">LU</div><div style="font-weight:bold">MA</div><div style="font-weight:bold">MI</div><div style="font-weight:bold">JU</div><div style="font-weight:bold">VI</div><div style="font-weight:bold">SA</div>
+                <div></div><div></div><div></div><div></div><div></div><div>1</div><div>2</div>
+                <div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div>
+                <div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div>
+                <div class="day marcado-corazon">17</div><div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div>
+                <div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div><div>31</div>
             </div>
-            <div class="reloj">
-                <div class="reloj-item"><p id="d">00</p><p>DÍAS</p></div>
-                <div class="reloj-item"><p id="h">00</p><p>HRS</p></div>
-                <div class="reloj-item"><p id="m">00</p><p>MIN</p></div>
-                <div class="reloj-item"><p id="s">00</p><p>SEG</p></div>
-            </div>
+            <p style="font-size: 0.75rem; margin-top: 12px; font-weight: bold;">07:00 PM</p>
         </div>
 
         <div class="card">
-            <svg viewBox="0 0 100 60" class="gancho-svg">
-                <defs><linearGradient id="oro" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#bf953f"/><stop offset="50%" style="stop-color:#fcf6ba"/><stop offset="100%" style="stop-color:#aa771c"/></linearGradient></defs>
-                <path d="M50,5 C42,5 42,15 50,15 C58,15 58,5 50,5 M50,15 L50,20 M10,50 L50,20 L90,50 Q50,60 10,50 Z" stroke="url(#oro)" stroke-width="2" fill="none"/>
-            </svg>
-            <h2 class="cursiva-gala" style="font-size: 3.8rem; margin-bottom: 5px;">Código de vestimenta</h2>
-            <p style="font-family: 'Cinzel'; letter-spacing: 2px; font-size: 0.8rem;">TRAJE FORMAL</p>
+            <p style="font-size: 1.8rem; margin-bottom: 5px;">👗</p>
+            <h3 class="titulo-oro" style="font-size: 0.9rem;">CÓDIGO DE VESTIMENTA</h3>
             <div class="vestimenta-box">
-                <div style="display: flex; justify-content: space-around;">
-                    <div><p class="cursiva-gala" style="font-size: 2.5rem;">Mujeres</p><p style="font-size: 0.6rem; letter-spacing: 2px;">DIVINAS</p></div>
-                    <div style="border-left: 1px solid #ddd; height: 60px;"></div>
-                    <div><p class="cursiva-gala" style="font-size: 2.5rem;">Hombres</p><p style="font-size: 0.6rem; letter-spacing: 2px;">GUAPOS</p></div>
+                <div style="display: flex; justify-content: space-around; align-items: center;">
+                    <div>
+                        <p style="font-weight: bold; font-size: 0.75rem;">MUJERES:</p>
+                        <p class="cursiva-gala" style="font-size: 2rem; color: var(--oro-texto);">Divinas</p>
+                    </div>
+                    <div style="height: 40px; width: 1px; background: #eee;"></div>
+                    <div>
+                        <p style="font-weight: bold; font-size: 0.75rem;">HOMBRES:</p>
+                        <p class="cursiva-gala" style="font-size: 2rem; color: var(--oro-texto);">Guapos</p>
+                    </div>
                 </div>
-                <div class="reserva-azul">NOS RESERVAMOS EL COLOR AZUL EN TODAS SUS TONALIDADES</div>
             </div>
+            <p style="font-size: 0.6rem; font-weight: bold; padding: 0 20px;">
+                NOS RESERVAMOS EL COLOR AZUL EN TODAS SUS TONALIDADES (Tornasol, Glaciar, Celeste)
+            </p>
         </div>
 
-        <div class="card">
-            <h2 class="cursiva-gala" style="font-size: 4rem;">Recepciones Chabelo</h2>
-            <p style="font-family: 'Cinzel'; font-size: 0.9rem; margin-top: 10px;">DOMINGO 17 DE MAYO | 6:00 PM</p>
-            <a href="https://maps.app.goo.gl/bajxmvSnRmh8bbL3A?g_st=aw" target="_blank" style="display: inline-block; margin-top: 25px; padding: 15px 30px; border: 2px solid var(--azul-profundo); color: var(--azul-profundo); text-decoration: none; border-radius: 50px; font-family: 'Cinzel'; font-weight: bold; font-size: 0.8rem;">VER UBICACIÓN</a>
-        </div>
-
-        <div class="card confirm-card">
-            <h2 style="font-family: 'Cinzel'; font-size: 1.2rem; letter-spacing: 3px;">CONFIRMACIÓN</h2>
-            <p style="margin: 20px 0; font-size: 0.9rem; font-weight: 300;">Tu presencia es el regalo más especial que puedo recibir en esta noche mágica.</p>
-            <p style="font-size: 0.75rem; opacity: 0.9; margin-bottom: 10px;">Favor de confirmar antes del 10 de Mayo</p>
-            <a href="https://wa.me/51938789466?text=¡Hola!%20Confirmo%20con%20mucha%20alegría%20mi%20asistencia%20a%20los%20XV%20de%20Ximena%20Yanina." 
-               class="btn-confirm">
-               CONFIRMAR POR WHATSAPP
+        <div class="card" style="background: #fafafa;">
+            <p style="font-size: 1.5rem; color: #c0392b;">📍</p>
+            <h3 class="titulo-oro" style="font-size: 0.9rem;">UBICACIÓN</h3>
+            <p style="font-weight: bold; margin: 10px 0; font-size: 1rem;">RECEPCIONES CHABELO</p>
+            <a href="https://maps.app.goo.gl/bajxmvSnRmh8bbL3A?g_st=aw" target="_blank" 
+               style="display: inline-block; margin-top: 15px; padding: 12px 30px; border: 1px solid var(--oro-texto); color: var(--oro-texto); text-decoration: none; border-radius: 5px; font-family: 'Cinzel'; font-size: 0.7rem; font-weight: bold;">
+                VER MAPA
             </a>
         </div>
 
-        <footer style="padding: 40px; font-size: 0.7rem; opacity: 0.5;">DESIGNED BY ELIAS MENDEZ DEV</footer>
+        <div class="card">
+            <p style="font-size: 1.5rem; color: #27ae60;">📱</p>
+            <h3 class="titulo-oro" style="font-size: 0.9rem;">CONFIRMAR ASISTENCIA</h3>
+            <p style="font-size: 0.8rem; margin: 15px 0;">Hablame por WhatsApp</p>
+            <a href="https://wa.me/51938789466" 
+               style="background: #25d366; color: white; text-decoration: none; padding: 15px 35px; border-radius: 50px; font-weight: bold; display: inline-block; font-size: 0.8rem;">
+                ENVIAR MENSAJE
+            </a>
+            <p style="font-size: 0.65rem; margin-top: 20px; font-weight: bold;">LUGAR RESERVADO: 1</p>
+            <p style="font-size: 0.55rem; opacity: 0.7;">(Lluvia de Sobres - Efectivo)</p>
+        </div>
+
+        <footer style="padding: 30px; font-size: 0.5rem; opacity: 0.4;">
+            DESIGNED BY ELIAS MENDEZ DEV
+        </footer>
     </div>
 
     <script>
@@ -210,42 +203,27 @@
                 document.getElementById('music-toggle').style.display = 'flex';
                 document.body.style.overflow = 'auto';
                 const cards = document.querySelectorAll('.card');
-                cards.forEach((c, i) => { setTimeout(() => c.classList.add('visible'), i * 300); });
+                cards.forEach((c, i) => { setTimeout(() => c.classList.add('visible'), i * 200); });
             }, 1000);
-            startBrillos(); startTimer();
+            startBrillos();
         }
         function controlMusic() {
-            const icon = document.getElementById('m-icon');
-            if(audio.paused) { audio.play(); icon.innerText="⏸️"; }
-            else { audio.pause(); icon.innerText="🎵"; }
-        }
-        function startTimer() {
-            const final = new Date("May 17, 2026 18:00:00").getTime();
-            setInterval(() => {
-                const ahora = new Date().getTime();
-                const d = final - ahora;
-                if(d < 0) return;
-                document.getElementById('d').innerText = Math.floor(d / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-                document.getElementById('h').innerText = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-                document.getElementById('m').innerText = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-                document.getElementById('s').innerText = Math.floor((d % (1000 * 60)) / 1000).toString().padStart(2, '0');
-            }, 1000);
+            if(audio.paused) audio.play(); else audio.pause();
         }
         function startBrillos() {
             const container = document.getElementById('sparkle-container');
-            const colores = ['#b9d9eb', '#ffffff', '#e0e0e0', '#d4af37'];
+            const colores = ['#b9d9eb', '#ffffff', '#d4af37'];
             setInterval(() => {
                 const s = document.createElement('div');
                 s.className = 'sparkle';
-                const size = Math.random() * 8 + 4;
+                const size = Math.random() * 5 + 2;
                 s.style.width = size + 'px'; s.style.height = size + 'px';
-                s.style.left = Math.random() * 100 + 'vw'; s.style.top = '-20px';
+                s.style.left = Math.random() * 100 + 'vw'; s.style.top = '-10px';
                 s.style.background = colores[Math.floor(Math.random()*colores.length)];
-                s.style.boxShadow = `0 0 10px ${s.style.background}`;
                 s.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 container.appendChild(s);
-                setTimeout(() => s.remove(), 5000);
-            }, 100);
+                setTimeout(() => s.remove(), 4000);
+            }, 150);
         }
     </script>
 </body>
