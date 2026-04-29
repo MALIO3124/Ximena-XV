@@ -4,288 +4,245 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XV - Ximena Yanina</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Pinyon+Script&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         :root {
             --azul-glaciar: #b9d9eb;
             --azul-profundo: #2c5d7d;
-            --plata: #e0e0e0;
+            --oro-degradado: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             --blanco-cristal: rgba(255, 255, 255, 0.95);
-            --oro-suave: #d4af37;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background: linear-gradient(-45deg, #f0f4f7, #e3f2fd, #ffffff, #f0f4f7);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: #f8fafc;
             font-family: 'Montserrat', sans-serif;
             color: var(--azul-profundo);
             text-align: center;
-            overflow: hidden;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- SECCIÓN DE BIENVENIDA --- */
-        #bienvenida {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #ffffff;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 5000;
-            transition: transform 1.5s cubic-bezier(0.8, 0, 0.2, 1);
-        }
-
-        .sobre {
-            width: 90%; max-width: 450px;
-            padding: 60px 30px;
-            border: 2px solid var(--azul-glaciar);
-            border-radius: 10px;
+        /* --- CONTENEDOR DE LA INVITACIÓN --- */
+        .main-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
             background: white;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-            position: relative;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding-bottom: 50px;
         }
 
-        .nombre-cursivo {
+        /* --- ESTILOS DE TEXTO --- */
+        .cursiva-premium {
             font-family: 'Pinyon Script', cursive;
-            font-size: 4.5rem;
-            color: var(--azul-profundo);
-            margin: 20px 0;
+            text-transform: none !important;
             line-height: 1;
         }
 
-        .boton-abrir {
-            background: var(--azul-profundo);
-            color: white;
-            padding: 18px 50px;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 3px;
-            cursor: pointer;
-            margin-top: 30px;
-        }
-
-        /* --- CONTENIDO PRINCIPAL --- */
-        #contenido {
-            display: none;
-            height: 100vh;
-            overflow-y: auto;
-            padding-bottom: 60px;
-        }
+        h1, h2, h3 { font-family: 'Cinzel', serif; }
 
         .card {
+            padding: 40px 20px;
+            margin: 20px;
+            border-radius: 15px;
             background: var(--blanco-cristal);
-            margin: 30px auto;
-            padding: 40px 25px;
-            width: 90%; max-width: 500px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid white;
-            opacity: 0; transform: translateY(30px);
-            transition: 1s all ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
         }
 
-        .card.visible { opacity: 1; transform: translateY(0); }
-
-        .frase {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        /* --- GANCHO DORADO SVG --- */
+        .gancho-svg {
+            width: 80px;
+            margin-bottom: 10px;
         }
 
-        /* --- CALENDARIO CSS --- */
-        .mes-titulo { font-family: 'Pinyon Script', cursive; font-size: 4rem; color: var(--azul-profundo); }
+        /* --- CALENDARIO --- */
         .calendar-grid {
-            display: grid; grid-template-columns: repeat(7, 1fr);
-            border-top: 1px solid var(--azul-glaciar); border-bottom: 1px solid var(--azul-glaciar);
-            padding: 15px 0; margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+            padding: 15px;
+            border-top: 1px solid var(--azul-glaciar);
+            border-bottom: 1px solid var(--azul-glaciar);
         }
-        .day-name { font-weight: bold; font-size: 0.7rem; color: var(--azul-profundo); }
-        .day-num { padding: 8px 0; font-size: 1rem; position: relative; z-index: 1; }
-        .day-num.highlight::after {
-            content: '❤'; position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); width: 35px; height: 35px;
-            background: var(--azul-glaciar); border-radius: 50%;
-            z-index: -1; opacity: 0.7; display: flex; align-items: center; justify-content: center;
-            font-size: 0.6rem; color: white; padding-top: 20px;
-        }
-
-        /* --- CUENTA REGRESIVA --- */
-        .reloj-container {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-            margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px;
-        }
-        .reloj-num { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: bold; }
-        .reloj-label { font-size: 0.6rem; letter-spacing: 1px; }
-
-        /* --- CÓDIGO DE VESTIMENTA (Basado en la foto) --- */
-        .vestimenta-icon { font-size: 2.5rem; margin-bottom: 10px; color: var(--oro-suave); }
-        .genero-title { font-family: 'Pinyon Script', cursive; font-size: 2.5rem; margin-bottom: 5px; }
-        .sub-text { font-size: 0.7rem; letter-spacing: 2px; color: #666; text-transform: uppercase; }
-        .reserva-color {
-            background: #fdfdfd; border: 1px dashed var(--azul-glaciar);
-            padding: 15px; margin-top: 20px; font-size: 0.8rem;
-            font-weight: 600; color: var(--azul-profundo);
+        .day-header { font-weight: bold; font-size: 0.7rem; color: #999; }
+        .day { padding: 8px 0; font-size: 0.9rem; position: relative; }
+        .day.marcado::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px; height: 30px;
+            background: var(--azul-glaciar);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.6;
         }
 
-        /* --- BOTONES Y OTROS --- */
-        .btn-gala {
-            display: inline-block; margin-top: 20px; padding: 15px 35px;
-            border: 2px solid var(--azul-profundo); color: var(--azul-profundo);
-            text-decoration: none; border-radius: 50px; font-family: 'Cinzel', serif;
-            font-weight: bold; font-size: 0.8rem;
+        /* --- RELOJ --- */
+        .reloj {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            margin-top: 25px;
+        }
+        .reloj-item p:first-child { font-family: 'Cinzel'; font-size: 1.5rem; font-weight: bold; }
+        .reloj-item p:last-child { font-size: 0.6rem; letter-spacing: 1px; }
+
+        /* --- CÓDIGO DE VESTIMENTA --- */
+        .vestimenta-box {
+            border: 2px dashed var(--azul-glaciar);
+            padding: 30px 15px;
+            margin-top: 20px;
         }
 
-        #music-toggle {
-            position: fixed; bottom: 20px; right: 20px;
-            background: white; border-radius: 50%; width: 55px; height: 55px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 100;
+        .azul-aviso {
+            background: #f1f5f9;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #d946ef; /* Un tono que resalte el aviso del azul */
+            border: 1px solid #ddd;
+        }
+
+        .btn-maps {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            border: 2px solid var(--azul-profundo);
+            color: var(--azul-profundo);
+            text-decoration: none;
+            font-family: 'Cinzel';
+            font-weight: bold;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .wa-float {
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <audio id="player" loop src="musica.mp3"></audio>
+<div class="main-wrapper">
+    
+    <header style="padding: 60px 20px;">
+        <p style="letter-spacing: 4px; font-size: 0.7rem;">ESTÁS INVITADO A LOS</p>
+        <h1 class="cursiva-premium" style="font-size: 5.5rem; color: var(--azul-profundo); margin: 10px 0;">XV Años</h1>
+        <h2 style="letter-spacing: 5px; font-weight: 400;">XIMENA YANINA</h2>
+    </header>
 
-    <div id="bienvenida">
-        <div class="sobre">
-            <p style="font-family: 'Cinzel'; letter-spacing: 3px; font-size: 0.7rem;">MIS QUINCE AÑOS</p>
-            <h1 class="nombre-cursivo">Ximena Yanina</h1>
-            <button class="boton-abrir" onclick="start()">ABRIR INVITACIÓN</button>
-        </div>
+    <div class="card">
+        <p style="font-style: italic; font-size: 0.95rem; line-height: 1.7;">
+            "Existen momentos en la vida que imaginamos, soñamos y esperamos; uno de esos momentos ha llegado..."
+        </p>
     </div>
 
-    <div id="music-toggle" onclick="toggle()" style="display:none">
-        <span id="m-icon">⏸️</span>
-    </div>
-
-    <div id="contenido">
-        <header style="padding: 60px 20px;">
-            <p style="letter-spacing: 5px; font-size: 0.7rem;">BIENVENIDOS A MIS</p>
-            <h1 style="font-family: 'Cinzel', serif; font-size: 2.5rem; margin: 10px 0;">XV AÑOS</h1>
-        </header>
-
-        <div class="card">
-            <p class="frase">"Existen momentos en la vida que imaginamos, soñamos y esperamos; uno de esos momentos ha llegado..."</p>
-            <p class="frase">"Con la bendición de Dios, el amor y apoyo que mi familia me ha dado, quiero que compartas conmigo esta noche tan especial..."</p>
-        </div>
-
-        <div class="card">
-            <p style="font-family: 'Cinzel'; font-size: 0.8rem; letter-spacing: 2px;">RESERVA ESTE DÍA</p>
-            <div class="mes-titulo">Mayo</div>
-            <div class="calendar-grid">
-                <div class="day-name">DO</div><div class="day-name">LU</div><div class="day-name">MA</div><div class="day-name">MI</div><div class="day-name">JU</div><div class="day-name">VI</div><div class="day-name">SA</div>
-                <div class="day-num"></div><div class="day-num"></div><div class="day-num"></div><div class="day-num"></div><div class="day-num"></div><div class="day-num">1</div><div class="day-num">2</div>
-                <div class="day-num">3</div><div class="day-num">4</div><div class="day-num">5</div><div class="day-num">6</div><div class="day-num">7</div><div class="day-num">8</div><div class="day-num">9</div>
-                <div class="day-num">10</div><div class="day-num">11</div><div class="day-num">12</div><div class="day-num">13</div><div class="day-num">14</div><div class="day-num">15</div><div class="day-num">16</div>
-                <div class="day-num highlight">17</div><div class="day-num">18</div><div class="day-num">19</div><div class="day-num">20</div><div class="day-num">21</div><div class="day-num">22</div><div class="day-num">23</div>
-                <div class="day-num">24</div><div class="day-num">25</div><div class="day-num">26</div><div class="day-num">27</div><div class="day-num">28</div><div class="day-num">29</div><div class="day-num">30</div>
-                <div class="day-num">31</div>
-            </div>
-            
-            <div class="reloj-container">
-                <div><p class="reloj-num" id="d">00</p><p class="reloj-label">DÍAS</p></div>
-                <div><p class="reloj-num" id="h">00</p><p class="reloj-label">HRS</p></div>
-                <div><p class="reloj-num" id="m">00</p><p class="reloj-label">MIN</p></div>
-                <div><p class="reloj-num" id="s">00</p><p class="reloj-label">SEG</p></div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h1 style="font-family: 'Cinzel'; font-size: 1.2rem; margin-bottom: 25px;">CÓDIGO DE VESTIMENTA</h1>
-            <div class="vestimenta-icon">👗</div>
-            <p style="font-family: 'Cinzel'; font-size: 0.9rem; font-weight: bold; letter-spacing: 2px;">TRAJE FORMAL</p>
-            
-            <div style="display: flex; justify-content: space-around; margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px;">
-                <div>
-                    <p class="genero-title">Mujeres</p>
-                    <p class="sub-text">Divinas</p>
-                </div>
-                <div style="border-left: 1px solid #eee; height: 60px;"></div>
-                <div>
-                    <p class="genero-title">Hombres</p>
-                    <p class="sub-text">Guapos</p>
-                </div>
-            </div>
-
-            <div class="reserva-color">
-                NOS RESERVAMOS EL COLOR<br>AZUL EN TODAS SUS TONALIDADES
-            </div>
-        </div>
-
-        <div class="card">
-            <h1 style="font-family: 'Cinzel'; font-size: 1.2rem;">RECEPCIÓN</h1>
-            <p style="margin-top: 15px; font-weight: bold;">RECEPCIONES CHAVELO</p>
-            <p style="font-size: 0.8rem; color: #666;">Domingo 17 de Mayo | 06:00 PM</p>
-            <a href="https://maps.app.goo.gl/bajxmvSnRmh8bbL3A?g_st=aw" target="_blank" class="btn-gala">VER UBICACIÓN</a>
-        </div>
-
-        <div class="card" style="background: var(--azul-profundo); color: white;">
-            <h1 style="font-family: 'Cinzel'; font-size: 1.2rem;">CONFIRMACIÓN</h1>
-            <p style="margin: 15px 0; font-size: 0.9rem;">¡Espero contar con tu presencia!</p>
-            <a href="https://wa.me/51938789466?text=¡Hola! Confirmo mi asistencia a los XV de Ximena." 
-               style="background: #25d366; color: white; text-decoration: none; padding: 15px 30px; display: inline-block; border-radius: 50px; font-weight: bold;">
-               CONFIRMAR ASISTENCIA
-            </a>
-        </div>
-
-        <footer style="padding: 40px; font-size: 0.6rem; opacity: 0.4; letter-spacing: 2px;">
-            DESIGNED BY ELIAS MENDEZ DEV
-        </footer>
-    </div>
-
-    <script>
-        const audio = document.getElementById('player');
+    <div class="card">
+        <h3 style="font-size: 0.9rem; letter-spacing: 2px;">RESERVA LA FECHA</h3>
+        <h2 class="cursiva-premium" style="font-size: 3.5rem; margin-top: 10px;">Mayo 2026</h2>
         
-        function start() {
-            document.getElementById('bienvenida').style.transform = 'translateY(-100%)';
-            audio.play().catch(e => console.log("Audio block"));
+        <div class="calendar-grid">
+            <div class="day-header">DO</div><div class="day-header">LU</div><div class="day-header">MA</div><div class="day-header">MI</div><div class="day-header">JU</div><div class="day-header">VI</div><div class="day-header">SA</div>
+            <div class="day"></div><div class="day"></div><div class="day"></div><div class="day"></div><div class="day"></div><div class="day">1</div><div class="day">2</div>
+            <div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div><div class="day">9</div>
+            <div class="day">10</div><div class="day">11</div><div class="day">12</div><div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div>
+            <div class="day marcado">17</div><div class="day">18</div><div class="day">19</div><div class="day">20</div><div class="day">21</div><div class="day">22</div><div class="day">23</div>
+            <div class="day">24</div><div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div><div class="day">29</div><div class="day">30</div><div class="day">31</div>
+        </div>
 
-            setTimeout(() => {
-                document.getElementById('bienvenida').style.display = 'none';
-                document.getElementById('contenido').style.display = 'block';
-                document.getElementById('music-toggle').style.display = 'flex';
-                document.body.style.overflow = 'auto';
-                
-                const cards = document.querySelectorAll('.card');
-                cards.forEach((c, i) => {
-                    setTimeout(() => c.classList.add('visible'), i * 250);
-                });
-            }, 1000);
+        <div class="reloj">
+            <div class="reloj-item"><p id="d">00</p><p>DÍAS</p></div>
+            <div class="reloj-item"><p id="h">00</p><p>HRS</p></div>
+            <div class="reloj-item"><p id="m">00</p><p>MIN</p></div>
+            <div class="reloj-item"><p id="s">00</p><p>SEG</p></div>
+        </div>
+    </div>
 
-            timer();
+    <div class="card">
+        <svg viewBox="0 0 100 60" class="gancho-svg">
+            <defs>
+                <linearGradient id="oro" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#bf953f" />
+                    <stop offset="50%" style="stop-color:#fcf6ba" />
+                    <stop offset="100%" style="stop-color:#aa771c" />
+                </linearGradient>
+            </defs>
+            <path d="M50,5 C42,5 42,15 50,15 C58,15 58,5 50,5 M50,15 L50,20 M10,50 L50,20 L90,50 Q50,60 10,50 Z" 
+                  stroke="url(#oro)" stroke-width="2" fill="none"/>
+        </svg>
+
+        <h2 class="cursiva-premium" style="font-size: 3rem; margin-bottom: 10px;">Código de vestimenta</h2>
+        <p style="font-family: 'Cinzel'; font-size: 0.8rem; letter-spacing: 2px;">TRAJE FORMAL</p>
+        
+        <div class="vestimenta-box">
+            <div style="display: flex; justify-content: space-around;">
+                <div>
+                    <p class="cursiva-premium" style="font-size: 2.2rem;">Mujeres</p>
+                    <p style="font-size: 0.6rem; letter-spacing: 2px;">DIVINAS</p>
+                </div>
+                <div style="border-left: 1px solid #ddd; height: 50px;"></div>
+                <div>
+                    <p class="cursiva-premium" style="font-size: 2.2rem;">Hombres</p>
+                    <p style="font-size: 0.6rem; letter-spacing: 2px;">GUAPOS</p>
+                </div>
+            </div>
+            
+            <div class="azul-aviso">
+                NOS RESERVAMOS EL COLOR AZUL EN TODAS SUS TONALIDADES
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 class="cursiva-premium" style="font-size: 3rem;">Recepciones Chabelo</h2>
+        <p style="font-size: 0.9rem; margin-top: 10px;">Río Bravo, Tamaulipas | 6:00 PM</p>
+        <a href="https://maps.google.com" target="_blank" class="btn-maps">VER EN GOOGLE MAPS</a>
+    </div>
+
+    <div class="card" style="background: #f1f5f9;">
+        <h3 style="font-family: 'Cinzel'; font-size: 1rem;">CONFIRMACIÓN</h3>
+        <p style="font-size: 0.8rem; margin-top: 10px;">Tu presencia es nuestro mejor regalo</p>
+        <a href="https://wa.me/51938789466" class="wa-float">CONFIRMAR ASISTENCIA</a>
+    </div>
+
+    <footer style="margin-top: 30px; font-size: 0.6rem; opacity: 0.5;">
+        DESIGNED BY ELIAS MENDEZ DEV
+    </footer>
+
+</div>
+
+<script>
+    // Lógica del Reloj
+    function actualizarReloj() {
+        const fechaEvento = new Date("May 17, 2026 18:00:00").getTime();
+        const ahora = new Date().getTime();
+        const diferencia = fechaEvento - ahora;
+
+        if (diferencia > 0) {
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            document.getElementById('d').innerText = dias.toString().padStart(2, '0');
+            document.getElementById('h').innerText = horas.toString().padStart(2, '0');
+            document.getElementById('m').innerText = minutos.toString().padStart(2, '0');
+            document.getElementById('s').innerText = segundos.toString().padStart(2, '0');
         }
+    }
 
-        function toggle() {
-            const icon = document.getElementById('m-icon');
-            if(audio.paused) { audio.play(); icon.innerText="⏸️"; }
-            else { audio.pause(); icon.innerText="🎵"; }
-        }
+    setInterval(actualizarReloj, 1000);
+    actualizarReloj();
+</script>
 
-        function timer() {
-            const end = new Date("May 17, 2026 18:00:00").getTime();
-            setInterval(() => {
-                const now = new Date().getTime();
-                const d = end - now;
-                if (d < 0) return;
-
-                document.getElementById('d').innerText = String(Math.floor(d / (1000 * 60 * 60 * 24))).padStart(2, '0');
-                document.getElementById('h').innerText = String(Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-                document.getElementById('m').innerText = String(Math.floor((d % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-                document.getElementById('s').innerText = String(Math.floor((d % (1000 * 60)) / 1000)).padStart(2, '0');
-            }, 1000);
-        }
-    </script>
 </body>
 </html>
