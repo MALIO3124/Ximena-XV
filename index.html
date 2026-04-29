@@ -23,7 +23,7 @@
             overflow: hidden; 
         }
 
-        /* --- PANTALLA DE ENTRADA --- */
+        /* --- PANTALLA DE BIENVENIDA --- */
         #bienvenida {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: white; display: flex; justify-content: center; align-items: center;
@@ -58,7 +58,7 @@
 
         .card {
             background: var(--blanco-perla); margin: 30px auto;
-            padding: 40px 20px; width: 90%; max-width: 500px;
+            padding: 40px 20px; width: 95%; max-width: 500px;
             border-radius: 20px; backdrop-filter: blur(10px);
             border: 1px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             opacity: 0; transform: translateY(30px); transition: 1s all ease;
@@ -86,12 +86,23 @@
         .reloj-item p:first-child { font-family: 'Cinzel'; font-size: 1.8rem; font-weight: bold; }
         .reloj-item p:last-child { font-size: 0.6rem; letter-spacing: 1px; }
 
-        /* --- VESTIMENTA --- */
+        /* --- VESTIMENTA (GANCHO) --- */
         .gancho-svg { width: 100px; margin: 10px auto; display: block; }
         .vestimenta-box { border: 2px dashed var(--azul-glaciar); padding: 25px 10px; margin-top: 20px; }
         .reserva-azul {
             background: #f1f5f9; padding: 15px; margin-top: 15px;
             font-size: 0.75rem; font-weight: bold; color: #d946ef; border: 1px solid #ddd;
+        }
+
+        /* --- CONFIRMACIÓN --- */
+        .confirm-card {
+            background: var(--azul-profundo);
+            color: white;
+        }
+        .btn-confirm {
+            background: #25d366; color: white; text-decoration: none;
+            padding: 20px 40px; border-radius: 50px; font-weight: bold;
+            display: inline-block; margin-top: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         #music-toggle {
@@ -157,7 +168,8 @@
                 <defs><linearGradient id="oro" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#bf953f"/><stop offset="50%" style="stop-color:#fcf6ba"/><stop offset="100%" style="stop-color:#aa771c"/></linearGradient></defs>
                 <path d="M50,5 C42,5 42,15 50,15 C58,15 58,5 50,5 M50,15 L50,20 M10,50 L50,20 L90,50 Q50,60 10,50 Z" stroke="url(#oro)" stroke-width="2" fill="none"/>
             </svg>
-            <h2 class="cursiva-gala" style="font-size: 3.5rem;">Código de vestimenta</h2>
+            <h2 class="cursiva-gala" style="font-size: 3.8rem; margin-bottom: 5px;">Código de vestimenta</h2>
+            <p style="font-family: 'Cinzel'; letter-spacing: 2px; font-size: 0.8rem;">TRAJE FORMAL</p>
             <div class="vestimenta-box">
                 <div style="display: flex; justify-content: space-around;">
                     <div><p class="cursiva-gala" style="font-size: 2.5rem;">Mujeres</p><p style="font-size: 0.6rem; letter-spacing: 2px;">DIVINAS</p></div>
@@ -169,9 +181,19 @@
         </div>
 
         <div class="card">
-            <h2 class="cursiva-gala" style="font-size: 4rem;">Recepciones Chavelo</h2>
+            <h2 class="cursiva-gala" style="font-size: 4rem;">Recepciones Chabelo</h2>
             <p style="font-family: 'Cinzel'; font-size: 0.9rem; margin-top: 10px;">DOMINGO 17 DE MAYO | 6:00 PM</p>
-            <a href="https://maps.app.goo.gl/bajxmvSnRmh8bbL3A?g_st=aw" target="_blank" style="display: inline-block; margin-top: 20px; padding: 15px 30px; border: 2px solid var(--azul-profundo); color: var(--azul-profundo); text-decoration: none; border-radius: 50px; font-family: 'Cinzel'; font-weight: bold; font-size: 0.8rem;">VER UBICACIÓN</a>
+            <a href="https://maps.app.goo.gl/bajxmvSnRmh8bbL3A?g_st=aw" target="_blank" style="display: inline-block; margin-top: 25px; padding: 15px 30px; border: 2px solid var(--azul-profundo); color: var(--azul-profundo); text-decoration: none; border-radius: 50px; font-family: 'Cinzel'; font-weight: bold; font-size: 0.8rem;">VER UBICACIÓN</a>
+        </div>
+
+        <div class="card confirm-card">
+            <h2 style="font-family: 'Cinzel'; font-size: 1.2rem; letter-spacing: 3px;">CONFIRMACIÓN</h2>
+            <p style="margin: 20px 0; font-size: 0.9rem; font-weight: 300;">Tu presencia es el regalo más especial que puedo recibir en esta noche mágica.</p>
+            <p style="font-size: 0.75rem; opacity: 0.9; margin-bottom: 10px;">Favor de confirmar antes del 10 de Mayo</p>
+            <a href="https://wa.me/51938789466?text=¡Hola!%20Confirmo%20con%20mucha%20alegría%20mi%20asistencia%20a%20los%20XV%20de%20Ximena%20Yanina." 
+               class="btn-confirm">
+               CONFIRMAR POR WHATSAPP
+            </a>
         </div>
 
         <footer style="padding: 40px; font-size: 0.7rem; opacity: 0.5;">DESIGNED BY ELIAS MENDEZ DEV</footer>
