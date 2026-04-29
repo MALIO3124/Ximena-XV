@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XV - Ximena Yanina</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;600&family=Pinyon+Script&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
         :root {
             --azul-glaciar: #b9d9eb;
             --azul-profundo: #2c5d7d;
-            --perla: #f0f4f7;
-            --cristal: rgba(255, 255, 255, 0.93);
             --plata: #e0e0e0;
+            --blanco-cristal: rgba(255, 255, 255, 0.95);
+            --oro-tornasol: #d4af37;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             background: linear-gradient(-45deg, #f0f4f7, #e3f2fd, #ffffff, #f0f4f7);
             background-size: 400% 400%;
@@ -31,23 +32,37 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- ENTRADA (SOBRE TORNASOL) --- */
+        /* --- ENTRADA (EL SOBRE) --- */
         #bienvenida {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
+            background: #ffffff;
             display: flex; justify-content: center; align-items: center;
             z-index: 5000;
             transition: transform 1.5s cubic-bezier(0.8, 0, 0.2, 1);
         }
 
         .sobre {
-            width: 90%; max-width: 400px;
-            padding: 50px 30px;
-            border: 4px double var(--azul-glaciar);
-            border-radius: 15px;
+            width: 90%; max-width: 450px;
+            padding: 60px 30px;
+            border: 2px solid var(--azul-glaciar);
+            border-radius: 10px;
             background: white;
             box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .sobre::before {
+            content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid var(--azul-glaciar); pointer-events: none;
+        }
+
+        .nombre-cursivo {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 5rem;
+            color: var(--azul-profundo);
+            margin: 20px 0;
+            line-height: 1;
         }
 
         .boton-abrir {
@@ -60,24 +75,81 @@
             letter-spacing: 3px;
             cursor: pointer;
             margin-top: 30px;
-            position: relative;
-            overflow: hidden;
+            transition: 0.4s;
         }
 
-        .boton-abrir::after {
+        /* --- CONTENIDO --- */
+        #contenido {
+            display: none;
+            height: 100vh;
+            overflow-y: auto;
+            padding-bottom: 60px;
+        }
+
+        .card {
+            background: var(--blanco-cristal);
+            margin: 30px auto;
+            padding: 45px 25px;
+            width: 90%; max-width: 500px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid white;
+            opacity: 0; transform: translateY(30px);
+            transition: 1s all ease;
+        }
+
+        .card.visible { opacity: 1; transform: translateY(0); }
+
+        .frase {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--azul-profundo);
+            margin-bottom: 20px;
+        }
+
+        /* --- CALENDARIO RECREADO CON CSS --- */
+        .calendario {
+            max-width: 320px;
+            margin: 20px auto;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .mes-titulo {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 3.5rem;
+            color: var(--azul-profundo);
+            margin-bottom: 10px;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            border-top: 2px solid var(--azul-profundo);
+            border-bottom: 2px solid var(--azul-profundo);
+            padding: 15px 0;
+        }
+        .day-name { font-weight: bold; font-size: 0.7rem; color: var(--azul-profundo); margin-bottom: 10px; }
+        .day-num { padding: 8px 0; font-size: 1rem; position: relative; }
+        .day-num.active {
+            color: var(--azul-profundo);
+            font-weight: bold;
+        }
+        /* El círculo del día 17 */
+        .day-num.highlight::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: sweep 2.5s infinite;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 35px; height: 35px;
+            background: var(--azul-glaciar);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.6;
         }
-
-        @keyframes sweep { 0% { left: -110%; } 100% { left: 110%; } }
 
         /* --- CHISPAS TORNASOL --- */
         #sparkle-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 10;
         }
         .sparkle {
@@ -91,71 +163,27 @@
             100% { transform: translateY(110vh); opacity: 0; }
         }
 
-        /* --- CONTENIDO --- */
-        #contenido {
-            display: none;
-            height: 100vh;
-            overflow-y: auto;
-            padding-bottom: 60px;
-        }
-
-        .card {
-            background: var(--cristal);
-            margin: 30px auto;
-            padding: 40px 25px;
-            width: 90%; max-width: 500px;
-            border-radius: 20px;
-            border: 1px solid white;
-            backdrop-filter: blur(10px);
-            opacity: 0; transform: translateY(30px);
-            transition: 1s all ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
-
-        .card.visible { opacity: 1; transform: translateY(0); }
-
-        h1 { font-family: 'Cinzel', serif; letter-spacing: 4px; }
-        .frase-emocional {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 20px 0;
-            padding: 0 10px;
-        }
-
-        .contador-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            margin-top: 20px;
-        }
-        .time-val { font-size: 2rem; font-family: 'Cinzel', serif; font-weight: bold; }
-        .time-lab { font-size: 0.6rem; letter-spacing: 1px; }
-
         .btn-gala {
             display: inline-block;
-            margin-top: 20px;
-            padding: 15px 30px;
+            margin-top: 25px;
+            padding: 15px 35px;
             border: 2px solid var(--azul-profundo);
             color: var(--azul-profundo);
             text-decoration: none;
             border-radius: 50px;
             font-family: 'Cinzel', serif;
-            font-size: 0.8rem;
             font-weight: bold;
+            transition: 0.4s;
         }
 
-        .confirmar-wa {
-            background: #25d366;
-            color: white;
-            text-decoration: none;
-            padding: 20px;
-            display: block;
-            border-radius: 50px;
-            font-weight: bold;
-            margin-top: 25px;
+        .wa-btn {
+            background: #25d366; color: white;
+            text-decoration: none; padding: 20px;
+            display: block; border-radius: 50px;
+            font-weight: bold; margin-top: 30px;
         }
 
-        #music-btn {
+        #music-toggle {
             position: fixed; bottom: 20px; right: 20px;
             background: white; border-radius: 50%; width: 55px; height: 55px;
             display: flex; align-items: center; justify-content: center;
@@ -169,56 +197,57 @@
 
     <div id="bienvenida">
         <div class="sobre">
-            <p style="font-family: 'Cinzel'; font-size: 0.7rem; letter-spacing: 3px;">MIS QUINCE AÑOS</p>
-            <h1 style="margin: 15px 0;">XIMENA YANINA</h1>
+            <p style="font-family: 'Cinzel'; letter-spacing: 3px; font-size: 0.8rem;">XV AÑOS</p>
+            <h1 class="nombre-cursivo">Ximena Yanina</h1>
             <button class="boton-abrir" onclick="start()">ABRIR INVITACIÓN</button>
         </div>
     </div>
 
     <div id="sparkle-container"></div>
 
-    <div id="music-btn" onclick="toggle()" style="display:none">
+    <div id="music-toggle" onclick="toggle()" style="display:none">
         <span id="m-icon">⏸️</span>
     </div>
 
     <div id="contenido">
         <header style="padding: 60px 20px;">
             <p style="letter-spacing: 5px; font-size: 0.8rem;">BIENVENIDOS A MIS</p>
-            <h1 style="font-size: 2.5rem; margin: 10px 0;">XV AÑOS</h1>
+            <h1 style="font-family: 'Cinzel', serif; font-size: 2.8rem; margin: 10px 0;">QUINCE AÑOS</h1>
         </header>
 
         <div class="card">
-            <p class="frase-emocional">
-                "Existen momentos en la vida que imaginamos, soñamos y esperamos; uno de esos momentos ha llegado..."
-            </p>
-            <p class="frase-emocional">
-                "Con la bendición de Dios, el amor y apoyo que mi familia me ha dado, quiero que compartas conmigo esta noche tan especial..."
-            </p>
+            <p class="frase">"Existen momentos en la vida que imaginamos, soñamos y esperamos; uno de esos momentos ha llegado..."</p>
+            <p class="frase">"Con la bendición de Dios, el amor y apoyo que mi familia me ha dado, quiero que compartas conmigo esta noche tan especial..."</p>
         </div>
 
         <div class="card">
-            <h2 style="font-family: 'Cinzel'; font-size: 1rem; letter-spacing: 2px;">FALTAN SOLO</h2>
-            <div class="contador-grid">
-                <div><p class="time-val" id="d">00</p><p class="time-lab">DÍAS</p></div>
-                <div><p class="time-val" id="h">00</p><p class="time-lab">HRS</p></div>
-                <div><p class="time-val" id="m">00</p><p class="time-lab">MIN</p></div>
-                <div><p class="time-val" id="s">00</p><p class="time-lab">SEG</p></div>
+            <p style="font-family: 'Cinzel'; font-size: 0.8rem; letter-spacing: 2px;">RESERVA LA FECHA</p>
+            <div class="calendario">
+                <div class="mes-titulo">Mayo</div>
+                <div class="calendar-grid">
+                    <div class="day-name">DO</div><div class="day-name">LU</div><div class="day-name">MA</div><div class="day-name">MI</div><div class="day-name">JU</div><div class="day-name">VI</div><div class="day-name">SA</div>
+                    <div class="day-num"></div><div class="day-num"></div><div class="day-num"></div><div class="day-num"></div><div class="day-num"></div><div class="day-num">1</div><div class="day-num">2</div>
+                    <div class="day-num">3</div><div class="day-num">4</div><div class="day-num">5</div><div class="day-num">6</div><div class="day-num">7</div><div class="day-num">8</div><div class="day-num">9</div>
+                    <div class="day-num">10</div><div class="day-num">11</div><div class="day-num">12</div><div class="day-num">13</div><div class="day-num">14</div><div class="day-num">15</div><div class="day-num">16</div>
+                    <div class="day-num active highlight">17</div><div class="day-num">18</div><div class="day-num">19</div><div class="day-num">20</div><div class="day-num">21</div><div class="day-num">22</div><div class="day-num">23</div>
+                    <div class="day-num">24</div><div class="day-num">25</div><div class="day-num">26</div><div class="day-num">27</div><div class="day-num">28</div><div class="day-num">29</div><div class="day-num">30</div>
+                    <div class="day-num">31</div>
+                </div>
             </div>
+            <p style="font-weight: bold; margin-top: 15px;">DOMINGO - 06:00 PM</p>
         </div>
 
         <div class="card">
-            <h1 style="font-size: 1.5rem;">CUÁNDO Y DÓNDE</h1>
-            <p style="margin: 20px 0; font-size: 1.2rem; font-family: 'Cinzel';">17 de Mayo, 2026</p>
-            <p style="font-weight: bold; color: var(--azul-profundo); margin-bottom: 20px;">06:00 PM</p>
-            <h3 style="font-family: 'Cinzel';">RECEPCIONES CHAVELO</h3>
-            <p style="font-size: 0.8rem; margin-top: 5px;">Río Bravo, Tamaulipas</p>
-            <a href="https://maps.app.goo.gl/bajxmvSnRmh8bbL3A?g_st=aw" target="_blank" class="btn-gala">VER UBICACIÓN</a>
+            <h1 style="font-size: 1.5rem; font-family: 'Cinzel';">UBICACIÓN</h1>
+            <p style="margin-top: 15px; font-weight: bold;">RECEPCIONES CHAVELO</p>
+            <p style="font-size: 0.8rem; color: #64748b;">Río Bravo, Tamaulipas</p>
+            <a href="https://maps.app.goo.gl/bajxmvSnRmh8bbL3A?g_st=aw" target="_blank" class="btn-gala">VER MAPA</a>
         </div>
 
         <div class="card">
-            <h1 style="font-size: 1.2rem;">CONFIRMACIÓN</h1>
-            <p style="margin-top: 10px;">¡Espero contar contigo!</p>
-            <a href="https://wa.me/51938789466?text=¡Hola! Confirmo mi asistencia a los XV de Ximena." class="confirmar-wa">CONFIRMAR POR WHATSAPP</a>
+            <h1 style="font-size: 1.2rem; font-family: 'Cinzel';">CONFIRMACIÓN</h1>
+            <p style="margin-top: 10px;">Tu presencia es mi mejor regalo.</p>
+            <a href="https://wa.me/51938789466?text=¡Hola! Confirmo mi asistencia a los XV de Ximena." class="wa-btn">CONFIRMAR POR WHATSAPP</a>
         </div>
 
         <footer style="padding: 40px; font-size: 0.6rem; opacity: 0.5;">
@@ -230,13 +259,14 @@
         const audio = document.getElementById('player');
         
         function start() {
+            // Animación de salida del sobre
             document.getElementById('bienvenida').style.transform = 'translateY(-100%)';
             audio.play().catch(e => console.log("Audio block"));
 
             setTimeout(() => {
                 document.getElementById('bienvenida').style.display = 'none';
                 document.getElementById('contenido').style.display = 'block';
-                document.getElementById('music-btn').style.display = 'flex';
+                document.getElementById('music-toggle').style.display = 'flex';
                 document.body.style.overflow = 'auto';
                 
                 const cards = document.querySelectorAll('.card');
@@ -245,7 +275,6 @@
                 });
             }, 1000);
 
-            timer();
             sparkles();
         }
 
@@ -255,31 +284,19 @@
             else { audio.pause(); icon.innerText="🎵"; }
         }
 
-        function timer() {
-            const end = new Date("May 17, 2026 18:00:00").getTime();
-            setInterval(() => {
-                const now = new Date().getTime();
-                const d = end - now;
-                document.getElementById('d').innerText = String(Math.floor(d / (1000 * 60 * 60 * 24))).padStart(2, '0');
-                document.getElementById('h').innerText = String(Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-                document.getElementById('m').innerText = String(Math.floor((d % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-                document.getElementById('s').innerText = String(Math.floor((d % (1000 * 60)) / 1000)).padStart(2, '0');
-            }, 1000);
-        }
-
         function sparkles() {
             const container = document.getElementById('sparkle-container');
             const colors = ['#b9d9eb', '#ffffff', '#e0e0e0', '#d4af37'];
             setInterval(() => {
                 const s = document.createElement('div');
                 s.className = 'sparkle';
-                const size = Math.random() * 7 + 3;
+                const size = Math.random() * 8 + 3;
                 s.style.width = size + 'px';
                 s.style.height = size + 'px';
                 s.style.left = Math.random() * 100 + 'vw';
                 s.style.top = '-10px';
                 s.style.background = colors[Math.floor(Math.random()*colors.length)];
-                s.style.boxShadow = `0 0 8px ${s.style.background}`;
+                s.style.boxShadow = `0 0 10px ${s.style.background}`;
                 s.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 container.appendChild(s);
                 setTimeout(() => s.remove(), 5000);
